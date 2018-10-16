@@ -1,0 +1,21 @@
+language: python
+python:
+  - 3.4
+  - 3.5
+  - 3.6
+# https://github.com/travis-ci/travis-ci/issues/9815
+# https://github.com/travis-ci/travis-ci/issues/9069#issuecomment-425720905
+matrix:
+  include:
+    - python: 3.7
+      dist: xenial
+      sudo: true
+install:
+  - pip install sphinx python-docs-theme sphinx-autodoc-typehints pytest pytest-cov coverage codecov
+  - if [[ "$(python --version)" > "Python 3.6" ]]; then pip install black mypy; else :; fi
+script:
+  - if [[ "$(python --version)" > "Python 3.6" ]]; then make check; else :; fi
+  - make test
+  - make doc
+after_success:
+  - codecov

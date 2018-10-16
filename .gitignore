@@ -1,0 +1,4 @@
+/doc/_build/
+/htmlcov
+/Pipfile.lock
+/.coverage
