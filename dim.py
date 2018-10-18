@@ -99,8 +99,8 @@ class Node(object):
 
     Notable properties and methods: :meth:`attr()`, :attr:`classes`,
     :attr:`html`, :attr:`text`, :meth:`ancestors()`,
-    :meth:`descendants`, :meth:`select`, :meth:`select_all`,
-    :meth:`matched_by`,
+    :meth:`descendants()`, :meth:`select()`, :meth:`select_all()`,
+    :meth:`matched_by()`,
 
     Attributes:
         tag      (:class:`Optional`\\[:class:`str`])
