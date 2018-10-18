@@ -61,6 +61,7 @@ from html.parser import HTMLParser
 
 try:
     from typing import (
+        Any,
         Dict,
         Generator,
         Iterable,
@@ -79,6 +80,7 @@ except ImportError:  # pragma: no cover
         def __getitem__(self, _):  # type: ignore
             return None
 
+    Any = None
     Dict = Generator = Iterable = Iterator = List = Match = _TypeStub()  # type: ignore
     Optional = Tuple = Union = _TypeStub()  # type: ignore
 
@@ -351,6 +353,30 @@ class ElementNode(Node):
             s += " children=%s" % repr(self.children)
         s += ">"
         return s
+
+    # https://ipython.org/ipython-doc/3/api/generated/IPython.lib.pretty.html
+    def _repr_pretty_(self, p: Any, cycle: bool) -> None:  # pragma: no cover
+        if cycle:
+            raise RuntimeError("cycle detected in DOM tree")
+        p.text("<" + self.tag)
+        if self.attrs:
+            p.text(" attrs=%s" % repr(list(self.attrs.items())))
+        if self.children:
+            p.text(" children=[")
+            if len(self.children) == 1 and isinstance(self.first_child(), TextNode):
+                p.text(repr(self.first_child()))
+            else:
+                with p.indent(2):
+                    for child in self.children:
+                        p.break_()
+                        if hasattr(child, "_repr_pretty_"):
+                            child._repr_pretty_(p, False)  # type: ignore
+                        else:
+                            p.text(repr(child))
+                        p.text(",")
+                p.break_()
+            p.text("]")
+        p.text(">")
 
     def __str__(self) -> str:
         """HTML representation of the node."""
