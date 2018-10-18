@@ -354,17 +354,17 @@ class ElementNode(Node):
         s += ">"
         return s
 
-    # https://ipython.org/ipython-doc/3/api/generated/IPython.lib.pretty.html
+    # https://ipython.readthedocs.io/en/stable/api/generated/IPython.lib.pretty.html
     def _repr_pretty_(self, p: Any, cycle: bool) -> None:  # pragma: no cover
         if cycle:
             raise RuntimeError("cycle detected in DOM tree")
-        p.text("<" + self.tag)
+        p.text("<\x1b[1m%s\x1b[0m" % self.tag)
         if self.attrs:
             p.text(" attrs=%s" % repr(list(self.attrs.items())))
         if self.children:
             p.text(" children=[")
             if len(self.children) == 1 and isinstance(self.first_child(), TextNode):
-                p.text(repr(self.first_child()))
+                p.text("\x1b[4m%s\x1b[0m" % repr(self.first_child()))
             else:
                 with p.indent(2):
                     for child in self.children:
@@ -372,7 +372,7 @@ class ElementNode(Node):
                         if hasattr(child, "_repr_pretty_"):
                             child._repr_pretty_(p, False)  # type: ignore
                         else:
-                            p.text(repr(child))
+                            p.text("\x1b[4m%s\x1b[0m" % repr(child))
                         p.text(",")
                 p.break_()
             p.text("]")
