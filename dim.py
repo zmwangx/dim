@@ -69,6 +69,7 @@ try:
         List,
         Match,
         Optional,
+        Sequence,
         Tuple,
         Union,
         cast,
@@ -334,16 +335,16 @@ class ElementNode(Node):
     def __init__(
         self,
         tag: str,
-        attrs: Iterable[Tuple[str, str]],
+        attrs: Iterable[Tuple[str, Optional[str]]],
         *,
         parent: Optional["Node"] = None,
-        children: Optional[List["Node"]] = None
+        children: Optional[Sequence["Node"]] = None
     ) -> None:
         Node.__init__(self)
         self.tag = tag.lower()  # type: str
-        self.attrs = OrderedDict((attr.lower(), val) for attr, val in attrs)
+        self.attrs = OrderedDict((attr.lower(), val or "") for attr, val in attrs)
         self.parent = parent
-        self.children = children or []
+        self.children = list(children or [])
 
     def __repr__(self) -> str:
         s = "<" + self.tag
@@ -479,7 +480,9 @@ class DOMBuilder(HTMLParser):
         super().__init__(convert_charrefs=True)
         self._stack = []  # type: List[Node]
 
-    def handle_starttag(self, tag: str, attrs: List[Tuple[str, str]]) -> None:
+    def handle_starttag(
+        self, tag: str, attrs: Sequence[Tuple[str, Optional[str]]]
+    ) -> None:
         node = ElementNode(tag, attrs)
         node._partial = True
         self._stack.append(node)
@@ -511,7 +514,9 @@ class DOMBuilder(HTMLParser):
     # handle_starttag only, whereas the latter triggers
     # handle_startendtag (which by default triggers both handle_starttag
     # and handle_endtag). See https://www.bugs.python.org/issue25258.
-    def handle_startendtag(self, tag: str, attrs: List[Tuple[str, str]]) -> None:
+    def handle_startendtag(
+        self, tag: str, attrs: Sequence[Tuple[str, Optional[str]]]
+    ) -> None:
         self.handle_starttag(tag, attrs)
 
     def handle_data(self, text: str) -> None:
@@ -745,16 +750,16 @@ class Selector:
         self,
         *,
         tag: Optional[str] = None,
-        classes: Optional[List[str]] = None,
+        classes: Optional[Sequence[str]] = None,
         id: Optional[str] = None,
-        attrs: Optional[List["AttributeSelector"]] = None,
+        attrs: Optional[Sequence["AttributeSelector"]] = None,
         combinator: Optional["Combinator"] = None,
         previous: Optional["Selector"] = None
     ) -> None:
         self.tag = tag.lower() if tag else None
-        self.classes = classes or []
+        self.classes = list(classes or [])
         self.id = id
-        self.attrs = attrs or []
+        self.attrs = list(attrs or [])
         self.combinator = combinator
         self.previous = previous
 
