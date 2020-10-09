@@ -14,5 +14,4 @@ doc:
 	PYTHONWARNINGS= make -C doc html
 
 init:
-	command -v pipenv >/dev/null || pip install pipenv
-	pipenv install --dev
+	pip install -r dev-requirements.txt
