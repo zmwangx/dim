@@ -428,7 +428,7 @@ class TextNode(str, Node):
         """
         Two text nodes are equal if and only if they are the same node.
 
-        For string comparision, use :attr:`text`.
+        For string comparison, use :attr:`text`.
         """
         return self is other
 
@@ -436,7 +436,7 @@ class TextNode(str, Node):
         """
         Two text nodes are non-equal if they are not the same node.
 
-        For string comparision, use :attr:`text`.
+        For string comparison, use :attr:`text`.
         """
         return self is not other
 
