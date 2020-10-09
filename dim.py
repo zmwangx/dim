@@ -7,7 +7,7 @@ selector support.
 - is a single module;
 - has no dependency outside `PSL <https://docs.python.org/3/library/>`_;
 - is not crazy long;
-- supports Python 3.4 and forward,
+- supports Python 3.5 and forward,
 
 so the file could be directly embedded in any Python 3.4+ application,
 or even in a monolithic source file. :mod:`dim` was designed to ease the
@@ -54,39 +54,24 @@ Simple example:
 
 import html
 import re
-import textwrap
 from collections import OrderedDict
 from enum import Enum
 from html.parser import HTMLParser
 
-try:
-    from typing import (
-        Any,
-        Dict,
-        Generator,
-        Iterable,
-        Iterator,
-        List,
-        Match,
-        Optional,
-        Sequence,
-        Tuple,
-        Union,
-        cast,
-    )
-except ImportError:  # pragma: no cover
-    # Python 3.4 without external typing module
-
-    class _TypeStub:
-        def __getitem__(self, _):  # type: ignore
-            return None
-
-    Any = None
-    Dict = Generator = Iterable = Iterator = List = Match = _TypeStub()  # type: ignore
-    Optional = Tuple = Union = _TypeStub()  # type: ignore
-
-    def cast(typ, val):  # type: ignore
-        return val
+from typing import (
+    Any,
+    Dict,
+    Generator,
+    Iterable,
+    Iterator,
+    List,
+    Match,
+    Optional,
+    Sequence,
+    Tuple,
+    Union,
+    cast,
+)
 
 
 SelectorGroupLike = Union[str, "SelectorGroup", "Selector"]

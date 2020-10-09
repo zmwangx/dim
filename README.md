@@ -12,7 +12,7 @@
 - is a single module;
 - has no dependency outside PSL;
 - is not crazy long;
-- supports Python 3.4 and forward,
+- supports Python 3.5 and forward,
 
 so the file could be directly embedded in any Python 3.4+ application, or even in a monolithic source file.
 
