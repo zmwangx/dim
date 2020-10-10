@@ -2,7 +2,7 @@
 
 [![download](https://img.shields.io/badge/download-dim.py-brightgreen.svg)](https://raw.githubusercontent.com/zmwangx/dim/master/dim.py)
 [![docs](https://img.shields.io/badge/documentation-dev-brightgreen.svg)](https://docs.tcl.sh/py/dim/)
-[![travis](https://travis-ci.org/zmwangx/dim.svg?branch=master)](https://travis-ci.org/zmwangx/dim/)
+[![test](https://github.com/zmwangx/dim/workflows/test/badge.svg)](https://github.com/zmwangx/dim/actions)
 [![codecov](https://codecov.io/gh/zmwangx/dim/branch/master/graph/badge.svg)](https://codecov.io/gh/zmwangx/dim)
 
 `dim` is an HTML parser and simple DOM implementation with CSS selector support.
