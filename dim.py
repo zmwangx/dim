@@ -519,7 +519,7 @@ class DOMBuilder(HTMLParser):
     # (e.g., <hr> vs <hr/>) consistent. The former triggers
     # handle_starttag only, whereas the latter triggers
     # handle_startendtag (which by default triggers both handle_starttag
-    # and handle_endtag). See https://www.bugs.python.org/issue25258.
+    # and handle_endtag). See https://bugs.python.org/issue25258.
     #
     # An exception is foreign elements, which aren't considered void
     # elements but can be explicitly marked as self-closing according to
