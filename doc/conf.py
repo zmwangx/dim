@@ -5,8 +5,6 @@ import sys
 sys.path.insert(0, os.path.abspath("."))
 sys.path.insert(0, os.path.abspath(".."))
 
-import genparamdoc
-import dim
 
 def copyright_years():
     this_year = datetime.date.today().year
@@ -14,6 +12,7 @@ def copyright_years():
         return str(this_year)
     else:
         return "2018\u2013%s" % this_year
+
 
 project = "dim"
 copyright = "%s, Zhiming Wang" % copyright_years()
@@ -38,10 +37,14 @@ autodoc_default_flags = ["members", "undoc-members"]
 autodoc_member_order = "bysource"
 
 # intersphinx
-intersphinx_mapping = {'python': ('https://docs.python.org/3', None)}
+intersphinx_mapping = {"python": ("https://docs.python.org/3", None)}
 
 # html
 html_theme = "python_docs_theme"
 html_last_updated_fmt = "%b %d, %Y"
 html_sidebars = {"**": ["localtoc.html", "sourcelink.html"]}
-html_theme_options = {"collapsiblesidebar": True}
+html_theme_options = {
+    "collapsiblesidebar": True,
+    "codebgcolor": "#eeffcc",
+    "codetextcolor": "#333333",
+}
