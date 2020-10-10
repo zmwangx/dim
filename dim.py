@@ -7,7 +7,7 @@ selector support.
 - is a single module;
 - has no dependency outside `PSL <https://docs.python.org/3/library/>`_;
 - is not crazy long;
-- supports Python 3.5 and forward,
+- supports Python 3.6 and forward,
 
 so the file could be directly embedded in any Python 3.4+ application,
 or even in a monolithic source file. :mod:`dim` was designed to ease the
