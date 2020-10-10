@@ -150,11 +150,33 @@ def test_parsing_void_elements():
         "<p>hello, world</p></p>",
         "<p>hello, world</div>",
         '<img src="/image.png"></img>',
+        '<svg><path d="M20,30 Q40,5 50,30 T90,30"></svg>',
     ],
 )
 def test_malformed_html(html):
     with pytest.raises(DOMBuilderException):
         parse_html(html)
+
+
+@pytest.mark.parametrize(
+    "html",
+    [
+        """\
+        <svg>
+          <svg x="0">
+            <rect x="0" y="0" height="100" width="100" fill="red"/>
+            <path d="M20,30 Q40,5 50,30 T90,30" fill="none" stroke="blue"/>
+          </svg>
+          <svg x="200">
+            <rect x="0" y="0" height="100" width="100" fill="green"/>
+          </svg>
+        </svg>
+        <hr>
+        """
+    ],
+)
+def test_valid_html(html):
+    parse_html(html)
 
 
 def test_tree_walking(tree):
